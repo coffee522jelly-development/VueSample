@@ -1,0 +1,69 @@
+<html lang="ja">
+
+<link rel="stylesheet" href="css/style.css" type="text/css">
+
+<body>
+    <div id="app" class="app">
+        <p class="title">チェックボックス要素</p>
+        <input type="checkbox" id="checkbox1" v-model="isChecked">
+        <label for="checkbox1">プロパティの値：{{isChecked}}</label>
+        <p>Q.朝ごはんは食べましたか？</p>
+        
+        <!--条件つきレンダリング-->
+        <template v-if="isChecked == true"><p>A.はい</p></template>
+        <template v-if="isChecked == false"><p>A.いいえ</p></template>
+    </div>
+
+    <div id="app2" class="app">
+        <p class="title">コンボボックス要素</p>     
+        <select v-model="selectValue">
+            <option disabled value="">使用中のキャリアを選択してください</option>
+            <option value="docomo">docomo</option>
+            <option value="au">au</option>
+            <option value="SoftBank">SoftBank</option>
+            <option value="Rakuten">Rakuten</option>
+        </select>
+        <p>携帯電話回線　: {{ selectValue }}</p>
+    </div>
+
+    <div id="app3" class="app">
+        <p class="title">インプット要素</p>
+        <p>郵便番号を入力してください</p>
+        <input v-model="inputZip" :placeholder="computedZip" v-on:keypress.enter="getAddress(computedZip)" maxlength="7">
+        <button @click="getAddress(computedZip)">Search</button>
+        <div class="result">
+            <transition name="trans">
+            <p class="res":key="results">{{results}}</p>
+            <!--  {{inputZip | filterZip}} -->
+            </transition>
+        </div>  
+    </div>
+
+    <div id="app4" class="range app" data-value="50">
+        <p class="title">範囲選択要素</p>
+        <div class="label" :style="{ left: rangeValue + '%' }">
+          <div class="value">
+            やる気 : {{ rangeValue }}%
+          </div>
+        </div>
+        <div class="input-box">
+          <input id="input-range" v-model="rangeValue" type="range" min="0" max="100" value="50" />
+        </div>
+    </div>
+
+    <div id="app5" class="app">
+        <label>
+        <p class="title">ラジオボタン要素</p>
+        <p>おやつの予算は？</p>
+          <label><input type="radio" v-model="value" value="100円">100円</label>
+          <label><input type="radio" v-model="value" value="300円">300円</label>
+          <label><input type="radio" v-model="value" value="500円">500円</label>
+          <label><input type="radio" v-model="value" value="700円">700円</label>
+          <p>{{ value }}</p>
+        </label>
+    </div>
+</body>
+
+<script src="dist/vue.js"></script>
+<script src="js/common.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
